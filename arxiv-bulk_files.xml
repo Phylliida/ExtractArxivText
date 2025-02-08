@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files>
+  <file name="__ia_thumb.jpg" source="original">
+    <mtime>1657308161</mtime>
+    <size>5386</size>
+    <md5>b2b6c3054022ed2ebeb6108a28d0679a</md5>
+    <crc32>a85558ff</crc32>
+    <sha1>77cd785370392bb4573381788049be529a0b7a08</sha1>
+    <format>JPEG Thumb</format>
+    <rotation>0</rotation>
+  </file>
+  <file name="arxiv-bulk_archive.torrent" source="metadata">
+    <btih>379384c4dccd6cc8098138275b107524120e680c</btih>
+    <mtime>1657308747</mtime>
+    <size>2156</size>
+    <md5>b38f1f0dc59a48469433ff4cef6c9b20</md5>
+    <crc32>c9e0104d</crc32>
+    <sha1>1e168bb7fe68409eb5a34bb293bb739d37f24ab0</sha1>
+    <format>Archive BitTorrent</format>
+  </file>
+  <file name="arxiv-bulk_files.xml" source="original">
+    <format>Metadata</format>
+    <md5>38d30cb624ccd3d48feecea9cdb97856</md5>
+    <summation>md5</summation>
+  </file>
+  <file name="arxiv-bulk_itemimage.jpg" source="original">
+    <mtime>1602747682</mtime>
+    <size>22557</size>
+    <md5>86fc8e55ce1bc2f50e21c0e49b0b8b15</md5>
+    <crc32>b7fc7f97</crc32>
+    <sha1>ccb1b3623652c88eab208a53a03b4cdb0925248e</sha1>
+    <format>Item Image</format>
+    <rotation>0</rotation>
+  </file>
+  <file name="arxiv-bulk_meta.sqlite" source="original">
+    <mtime>1602747819</mtime>
+    <size>10240</size>
+    <format>Metadata</format>
+    <md5>8537ee10b323ae782c28e0ff38d9e3ff</md5>
+    <crc32>f8eacbfa</crc32>
+    <sha1>5e2a2e26f12bb315aa80b1a7dc15c3b1912dcedd</sha1>
+  </file>
+  <file name="arxiv-bulk_meta.xml" source="original">
+    <mtime>1657308746</mtime>
+    <size>4415</size>
+    <format>Metadata</format>
+    <md5>4a570f0c12209305ff774d8a07c7f37d</md5>
+    <crc32>faab1f26</crc32>
+    <sha1>f77629a592dcf238a356d0108b53497d0657084e</sha1>
+  </file>
+  <file name="history/files/arxivlogo.jpg.~1~" source="original">
+    <mtime>1504803483</mtime>
+    <size>22557</size>
+    <format>JPEG</format>
+    <rotation>0</rotation>
+    <md5>86fc8e55ce1bc2f50e21c0e49b0b8b15</md5>
+    <crc32>b7fc7f97</crc32>
+    <sha1>ccb1b3623652c88eab208a53a03b4cdb0925248e</sha1>
+    <old_version>true</old_version>
+  </file>
+  <file name="history/files/arxivlogo_thumb.jpg.~1~" source="derivative">
+    <format>JPEG Thumb</format>
+    <original>history/files/arxivlogo.jpg.~1~</original>
+    <mtime>1504657242</mtime>
+    <size>2252</size>
+    <md5>684eb985b56e49a6b916815bae9f3ca5</md5>
+    <crc32>3d240382</crc32>
+    <sha1>05bb8849e5e47dd6ac21f443804e92d33b5c2e50</sha1>
+    <old_version>true</old_version>
+  </file>
+</files>
