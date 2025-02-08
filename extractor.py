@@ -276,6 +276,8 @@ if __name__ == '__main__':
     extensions = defaultdict(lambda: [])
     for name in item_names + sorted(list(nonArchiveFiles)):
         if not "_src_" in name: continue # ignore pdf
+        fullZipName = name
+        name = os.path.basename(name)
         outDir = f'out/{name}'
         completedPath = f"{outDir}/completed.txt"
         completedDownloadPath = f"{outDir}/completeddownload.txt"
@@ -290,8 +292,8 @@ if __name__ == '__main__':
             from pathlib import Path
             Path(outDir).mkdir(parents=True, exist_ok=True)
             # s3
-            if name.startswith("src/"):
-                link = name + ".tar"
+            if fullZipName.startswith("src/"):
+                link = fullZipName + ".tar"
                 download_file(link, downloadPath)
             else:
                 link = f'https://archive.org/download/{name}/{name}.tar'
