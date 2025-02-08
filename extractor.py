@@ -274,7 +274,7 @@ if __name__ == '__main__':
     from collections import defaultdict
     item_names = sorted(item_names)
     extensions = defaultdict(lambda: [])
-    for name in item_names + sorted(list(nonArchiveFiles)):
+    for name in sorted(list(nonArchiveFiles)) + item_names:
         if not "_src_" in name: continue # ignore pdf
         fullZipName = name
         name = os.path.basename(name)
@@ -336,9 +336,27 @@ if __name__ == '__main__':
                         os.remove(pInnerFullDir)
         import py7zr
         print("Compressing...")
-        filters = [{"id": py7zr.FILTER_ARM}, {"id": py7zr.FILTER_LZMA2, "preset": 9}]
-        with py7zr.SevenZipFile(outZip, 'w', filters=filters) as z:
-            z.writeall(extractFolder)
+        
+        import subprocess
+
+        
+        # py7zr gives errors with non-unicode file names, wheras this works more robustly
+        cmd = [
+            r"C:\Program Files\7-Zip\7z.exe",
+            "a",
+            "-mx9", # maximum compression
+            outZip,
+            extractFolder
+        ]
+
+        try:
+            result = subprocess.run(cmd, capture_output=True, text=True)
+            print("Output:", result.stdout)
+            if result.stderr:
+                print("Errors:", result.stderr)
+            print("Return code:", result.returncode)
+        except Exception as e:
+            print(f"Error occurred: {e}")
         print("Done compression")
         print("Cleaning up tar...")
         os.remove(downloadPath)
