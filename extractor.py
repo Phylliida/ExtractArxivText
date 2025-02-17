@@ -49,7 +49,7 @@ def download_file(key, targetPath):
         print("Already download:" + key)
         return
     # Download file
-    print('\nDownloading s3://arxiv/{} to {}...'.format(key, key))
+    print('\nDownloading s3://arxiv/{} to {}...'.format(key, targetPath))
 
     try:
         s3resource.meta.client.download_file(
@@ -269,7 +269,8 @@ if __name__ == '__main__':
     print(list(s3Files)[0], list(archiveFiles)[0])
     print("Available additional files not in archive: " + str(len(nonArchiveFiles)))
     print("Overlapping files: " + str(len(overlappingFiles)))
-
+    import time
+    time.sleep(1.0)
        
     from collections import defaultdict
     item_names = sorted(item_names)
@@ -289,15 +290,22 @@ if __name__ == '__main__':
             print("Completed:"+ name)
             continue
         if not os.path.exists(completedDownloadPath):
-            from pathlib import Path
-            Path(outDir).mkdir(parents=True, exist_ok=True)
-            # s3
-            if fullZipName.startswith("src/"):
-                link = fullZipName + ".tar"
-                download_file(link, downloadPath)
-            else:
-                link = f'https://archive.org/download/{name}/{name}.tar'
-                download_file_arxiv(link, downloadPath)
+        
+            while True:
+                from pathlib import Path
+                Path(outDir).mkdir(parents=True, exist_ok=True)
+                # s3
+                if fullZipName.startswith("src/"):
+                    link = fullZipName + ".tar"
+                    download_file(link, downloadPath)
+                else:
+                    link = f'https://archive.org/download/{name}/{name}.tar'
+                    download_file_arxiv(link, downloadPath)
+                if os.exists(downloadPath):
+                    break
+                else:
+                    time.sleep(5.0) # fall off and wait for a bit before retry
+                 
             with open(completedDownloadPath, "w") as f:
                 f.write("Done")
         if not os.path.exists(completedExtractPath):
@@ -323,7 +331,13 @@ if __name__ == '__main__':
                                     # save it
                                     pass
                                 elif extension in nonTextFileTypes:
-                                    os.remove(f)
+                                    try:
+                                        os.remove(f.replace("\\", "/"))
+                                    except:
+                                        # readonly files wont let us delete them, fix that
+                                        import stat
+                                        os.chmod(f, stat.S_IRWXU| stat.S_IRWXG| stat.S_IRWXO)
+                                        os.remove(f)
                                     # delete it
                                     pass
                                 else:
@@ -361,7 +375,18 @@ if __name__ == '__main__':
         print("Cleaning up tar...")
         os.remove(downloadPath)
         print("Cleaning up folder")
-        shutil.rmtree(extractFolder)
+        import errno, stat
+        def handleRemoveReadonly(func, path, exc):
+          excvalue = exc[1]
+          if func in (os.rmdir, os.remove, os.unlink) and excvalue.errno == errno.EACCES:
+              os.chmod(path, stat.S_IRWXU| stat.S_IRWXG| stat.S_IRWXO) # 0777
+              func(path)
+          else:
+              raise
+
+                
+        # from https://stackoverflow.com/a/1214935
+        shutil.rmtree(extractFolder, ignore_errors=False, onerror=handleRemoveReadonly)
         print("Done cleaning up")
         with open(completedPath, 'w') as f:
             f.write("done")
