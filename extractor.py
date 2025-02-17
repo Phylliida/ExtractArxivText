@@ -301,7 +301,7 @@ if __name__ == '__main__':
                 else:
                     link = f'https://archive.org/download/{name}/{name}.tar'
                     download_file_arxiv(link, downloadPath)
-                if os.exists(downloadPath):
+                if os.path.exists(downloadPath):
                     break
                 else:
                     time.sleep(5.0) # fall off and wait for a bit before retry
